@@ -3,11 +3,13 @@ import { PlaywrightPage } from "../../../shared/pages/playwrightPage";
 
 export class ResultsPage extends PlaywrightPage {
 	public readonly txtItemAdded: Locator;
+	public readonly btnAddToBasket: Locator;
 
 	constructor(page: Page) {
 		super(page);
 
 		this.txtItemAdded = page.getByText("Item added");
+		this.btnAddToBasket = page.getByRole("button", { name: "Add to basket" });
 	}
 
 	public async selectAddToBasketButton(index: number): Promise<void> {

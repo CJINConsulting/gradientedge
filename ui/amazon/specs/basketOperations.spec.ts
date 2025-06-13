@@ -1,18 +1,23 @@
-import { test, expect } from '@playwright/test';
+import { test } from "../fixtures/pageObjects";
+import { expect } from "@playwright/test";
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test.describe("Amazon - Basket Operations", () => {
+  	test("Update the basket item amount", {tag: "@Smoke"}, async ({ homePage, resultsPage, basketPage }) => {
+		await homePage.load();
+		await homePage.searchForProduct("aa batteries");
+		await resultsPage.selectAddToBasketButton(1);
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+		await expect(resultsPage.txtShoppingBasketCount).toContainText("1");
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+		await resultsPage.openShoppingBasket();
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+		await basketPage.increaseQuantityByOne();
+		await expect(resultsPage.txtShoppingBasketCount).toContainText("2");
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
+		await basketPage.decreaseQuantityByOne();
+		await expect(resultsPage.txtShoppingBasketCount).toContainText("1");
+
+		await basketPage.deleteItem();
+		await expect(resultsPage.txtShoppingBasketCount).toContainText("0");
+	});
+})

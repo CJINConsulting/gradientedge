@@ -29,12 +29,3 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
-
-    - name: Publish results to pipeline
-      uses: dorny/test-reporter@v2
-      with:
-        name: ${{github.workflow}}
-        path: ${{github.workspace}}/test-results/test-results.xml
-        fail-on-error: 'false'
-        reporter: 'jest-junit'
-        use-actions-summary: 'true'

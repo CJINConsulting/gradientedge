@@ -17,7 +17,7 @@ export class PlaywrightPage {
 	}
 
 	protected async acceptCookiePreferences() {
-		await this.btnAllowCookies.waitFor({ state: "visible", timeout: 5000 });
+		await this.page.waitForLoadState("load");
 
 		if (await this.btnAllowCookies.isVisible()) {
 			await this.btnAllowCookies.click();
@@ -41,7 +41,7 @@ export class PlaywrightPage {
 	}
 
 	public async checkShoppingBasketCount(count: string): Promise<void> {
-		expect(await this.txtShoppingBasketCount).toContainText(count, {timeout: 5000});
+		expect(await this.txtShoppingBasketCount).toContainText(count, { timeout: 5000 });
 	}
 
 	public async isMobileViewPort(): Promise<Boolean> {
