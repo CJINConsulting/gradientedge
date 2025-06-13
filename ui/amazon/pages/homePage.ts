@@ -14,12 +14,12 @@ export class HomePage extends PlaywrightPage {
 
 	public async load(): Promise<void> {
 		await this.page.goto("/");
-        await this.continueShopping();
+		await this.continueShopping();
 		await this.acceptCookiePreferences();
 	}
 
 	public async searchForProduct(productName: string): Promise<void> {
-        await this.page.waitForLoadState('load');
+		await this.page.waitForLoadState("load");
 		await this.txtSearchBox.fill(productName);
 		await this.btnSearchSubmit.click();
 	}

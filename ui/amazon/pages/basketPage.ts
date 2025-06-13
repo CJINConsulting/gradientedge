@@ -11,23 +11,23 @@ export class BasketPage extends PlaywrightPage {
 
 		this.btnIncreaseQuantityByOne = page.getByRole("button", { name: "Increase quantity by one", exact: true });
 		this.btnDecreaseQuantityByOne = page.getByRole("button", { name: "Decrease quantity by one", exact: true });
-		this.btnDeleteItem = page.getByRole("button", {name: /Delete/});
+		this.btnDeleteItem = page.getByRole("button", { name: /Delete/ });
 	}
 
 	public async increaseQuantityByOne(): Promise<void> {
-        await this.page.waitForLoadState('load');
+		await this.page.waitForLoadState("load");
 		await this.btnIncreaseQuantityByOne.click();
 		await this.btnIncreaseQuantityByOne.waitFor({ state: "visible" });
 	}
 
 	public async decreaseQuantityByOne(): Promise<void> {
-        await this.page.waitForLoadState('load');
+		await this.page.waitForLoadState("load");
 		await this.btnDecreaseQuantityByOne.click();
 		await this.btnIncreaseQuantityByOne.waitFor({ state: "visible" });
 	}
 
 	public async deleteItem(): Promise<void> {
-        await this.page.waitForLoadState('load');
+		await this.page.waitForLoadState("load");
 		await this.btnDeleteItem.click();
 		await this.btnDeleteItem.waitFor({ state: "hidden" });
 	}

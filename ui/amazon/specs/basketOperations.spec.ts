@@ -2,7 +2,7 @@ import { test } from "../fixtures/pageObjects";
 import { expect } from "@playwright/test";
 
 test.describe("Amazon - Basket Operations", () => {
-  	test("Update the basket item amount", {tag: "@Smoke"}, async ({ homePage, resultsPage, basketPage }) => {
+	test("Update the basket item amount", { tag: "@Smoke" }, async ({ homePage, resultsPage, basketPage }) => {
 		await homePage.load();
 		await homePage.searchForProduct("aa batteries");
 		await resultsPage.selectAddToBasketButton(1);
@@ -20,4 +20,4 @@ test.describe("Amazon - Basket Operations", () => {
 		await basketPage.deleteItem();
 		await expect(resultsPage.txtShoppingBasketCount).toContainText("0");
 	});
-})
+});

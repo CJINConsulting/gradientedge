@@ -3,7 +3,7 @@ import { Locator, Page, expect } from "playwright/test";
 export class PlaywrightPage {
 	protected page: Page;
 	public readonly btnAllowCookies: Locator;
-    public readonly btnContinueShopping: Locator;
+	public readonly btnContinueShopping: Locator;
 	public readonly lnkShoppingBasket: Locator;
 	public readonly txtShoppingBasketCount: Locator;
 
@@ -12,7 +12,7 @@ export class PlaywrightPage {
 	constructor(page: Page) {
 		this.page = page;
 		this.btnAllowCookies = page.getByRole("button", { name: "Accept" });
-        this.btnContinueShopping = page.getByRole("button", { name: "Continue shopping" });
+		this.btnContinueShopping = page.getByRole("button", { name: "Continue shopping" });
 		this.lnkShoppingBasket = page.getByRole("link", { name: /shopping basket/ });
 		this.lnkMobileCart = page.getByLabel("Cart", { exact: true });
 		this.txtShoppingBasketCount = page.locator("#nav-cart-count");
