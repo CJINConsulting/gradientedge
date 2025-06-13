@@ -1,18 +1,19 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from '../fixtures/pageObjects';
 
-test("has title", async ({ page }) => {
-	await page.goto("https://playwright.dev/");
+test.describe("Amazon - Add items to the basket", () => {
+	
+	test("Add 1 item", async ( { homePage }) => {
 
-	// Expect a title "to contain" a substring.
-	await expect(page).toHaveTitle(/Playwright/);
-});
+		
+	});
 
-test("get started link", { tag: ["@Smoke"] }, async ({ page }) => {
-	await page.goto("https://playwright.dev/");
+	test("Add 2 items", { tag: ["@Smoke"] }, async ({ page }) => {
+		await page.goto("https://playwright.dev/");
 
-	// Click the get started link.
-	await page.getByRole("link", { name: "Get started" }).click();
+		// Click the get started link.
+		await page.getByRole("link", { name: "Get started" }).click();
 
-	// Expects page to have a heading with the name of Installation.
-	await expect(page.getByRole("heading", { name: "Installation" })).toBeVisible();
+		// Expects page to have a heading with the name of Installation.
+		await expect(page.getByRole("heading", { name: "Installation" })).toBeVisible();
+	});
 });

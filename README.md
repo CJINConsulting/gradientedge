@@ -151,6 +151,7 @@ steps:
 
 #### Page Object Model (POM)
 - The website has been partitioned into logical pages using the Page Object Model. This approach gives us reusable components for different pages and elements. The tests are more maintainable and easier to understand as a result
+- We could go a step further - abstracting page usage into controller classes and injecting them as fixtures
 
 ### Error Handling: How does your test handle unexpected situations, such as network issues or UI changes?
 
