@@ -58,7 +58,6 @@ export default defineConfig({
 				baseURL: baseURL,
 				screenshot: 'on',
 				video: 'on'
-
 			},
 		},
 
