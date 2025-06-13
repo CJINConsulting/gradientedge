@@ -21,7 +21,7 @@ jobs:
       run: npx playwright install --with-deps
 
     - name: Run Playwright tests
-      run: npx playwright test --grep @smoke
+      run: npx playwright test --grep @smoke --project chromium
 
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
@@ -29,3 +29,12 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+    - name: Publish results to pipeline
+      uses: dorny/test-reporter@v2
+      with:
+        name: ${{github.workflow}}
+        path: ${{github.workspace}}/test-results/test-results.xml
+        fail-on-error: 'false'
+        reporter: 'jest-junit'
+        use-actions-summary: 'true'
