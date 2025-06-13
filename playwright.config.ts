@@ -1,7 +1,4 @@
 import { defineConfig, devices } from "@playwright/test";
-import dotenv from "dotenv";
-
-const baseURL: string = "https://www.amazon.co.uk";
 
 export default defineConfig({
 	testDir: "./ui",
@@ -18,7 +15,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		// baseURL: 'http://localhost:3000',
+		baseURL: "https://www.amazon.co.uk",
 
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on-first-retry",
@@ -32,7 +29,6 @@ export default defineConfig({
 			name: "chromium",
 			use: {
 				...devices["Desktop Chrome"],
-				baseURL: baseURL,
 			},
 		},
 
@@ -40,7 +36,6 @@ export default defineConfig({
 			name: "firefox",
 			use: {
 				...devices["Desktop Firefox"],
-				baseURL: baseURL,
 			},
 		},
 
@@ -48,7 +43,6 @@ export default defineConfig({
 			name: "webkit",
 			use: {
 				...devices["Desktop Safari"],
-				baseURL: baseURL,
 			},
 		},
 
@@ -57,7 +51,6 @@ export default defineConfig({
 			name: "iPhone",
 			use: {
 				...devices["iPhone 15 Pro Max"],
-				baseURL: baseURL,
 				screenshot: "on",
 				video: "on",
 			},
@@ -67,7 +60,6 @@ export default defineConfig({
 			name: "Samsung",
 			use: {
 				...devices["Galaxy S24"],
-				baseURL: baseURL,
 			},
 		},
 	],
