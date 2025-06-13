@@ -1,7 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 import dotenv from "dotenv";
 
-const baseURL: string = "https://www.amazon.co.uk/";
+const baseURL: string = "https://www.amazon.co.uk";
 
 export default defineConfig({
 	testDir: "./ui",

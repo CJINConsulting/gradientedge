@@ -1,19 +1,23 @@
-import { test, expect } from '../fixtures/pageObjects';
+import { test } from "../fixtures/pageObjects";
+import { expect } from "@playwright/test";
 
 test.describe("Amazon - Add items to the basket", () => {
-	
-	test("Add 1 item", async ( { homePage }) => {
-		
-		
-	});
+	test("Add an item to the basket", {tag: "@Smoke"}, async ({ homePage, resultsPage, basketPage }) => {
+		await homePage.load();
+		await homePage.searchForProduct("aa batteries");
+		await resultsPage.selectAddToBasketButton(1);
 
-	test("Add 2 items", { tag: ["@Smoke"] }, async ({ page }) => {
-		await page.goto("https://playwright.dev/");
+		await expect(resultsPage.txtShoppingBasketCount).toContainText("1");
 
-		// Click the get started link.
-		await page.getByRole("link", { name: "Get started" }).click();
+		await resultsPage.openShoppingBasket();
 
-		// Expects page to have a heading with the name of Installation.
-		await expect(page.getByRole("heading", { name: "Installation" })).toBeVisible();
+		await basketPage.increaseQuantityByOne();
+		await expect(resultsPage.txtShoppingBasketCount).toContainText("2");
+
+		await basketPage.decreaseQuantityByOne();
+		await expect(resultsPage.txtShoppingBasketCount).toContainText("1");
+
+		await basketPage.deleteItem();
+		await expect(resultsPage.txtShoppingBasketCount).toContainText("0");
 	});
 });

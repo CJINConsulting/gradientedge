@@ -1,12 +1,13 @@
 # QA Engineer Technical Exercise 
 ## Objective 
-We’d like you to create an automated test suite that covers the following scenarios on Amazon (or a similar e-commerce platform): 
-1. Navigation  : Navigate to a product page. 
-2. Add to Basket  : Add the product to the shopping basket. 
-3. Basket Operations  : Perform operations within the basket,  including: 
-   - Increase the quantity of an item. 
-   - Decrease the quantity of an item. 
-   - Remove an item from the basket. 
+We’d like you to create an automated test suite that covers the following scenarios on Amazon (or a similar e-commerce platform):
+
+1. Navigation  : Navigate to a product page.
+2. Add to Basket  : Add the product to the shopping basket.
+3. Basket Operations  : Perform operations within the basket,  including:
+   - Increase the quantity of an item.
+   - Decrease the quantity of an item.
+   - Remove an item from the basket.
 
 ## Instructions
 
@@ -73,6 +74,38 @@ npx playwright show-report
 - environments are available over HTTPS - no local dev servers
 - Latest browsers and versions
 
+### Challenge assumptions
+- The test is for a 'logged out' user
+- Any product can be selected
+- We're not validating any of the details of the product
+- No special handling or verification of promotional discounts or dynamic pricing
+- Product can be found by search and select
+- No multi-product scenarios required
+
+### Considered for future work
+- creating environment files to store configuration values for use in the tests e.g.
+
+```json
+// dev.json
+{
+  api: {
+    baseUrl: "",
+    credentials: {}
+  },
+  web: {
+    baseUrl: "",
+  },
+  flags: {
+    authType: "",
+    ssoEnabled: true
+  }
+}
+```
+- data factories to generate test values for each test
+- more pipelines for capturing screenshots and videos for artifact storage
+- Managing multiple items in search
+- Managing multiple items in basket
+
 ## Architectural decisions
 
 *describe the architectural decisions and reasoning behind your approach*
@@ -91,7 +124,6 @@ We've started with a basic setup, with all client files inside their own folders
     - fixtures/
 - playwright.config.ts
 - package.json
-- reports/
 ```
 
 This gives us a logical structure to place our code, data files, helpers etc at the right level to accommodate sharing across client tests. It would also allow us clear way to add in an API folder in the future, following a similar setup.
