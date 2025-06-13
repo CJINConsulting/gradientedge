@@ -44,24 +44,30 @@ export default defineConfig({
 
 		{
 			name: "webkit",
-			use: { 
-        ...devices["Desktop Safari"], 
-        baseURL: baseURL },
+			use: {
+				...devices["Desktop Safari"],
+				baseURL: baseURL,
+			},
 		},
 
 		/* Test against mobile viewports. */
 		{
 			name: "iPhone",
-			use: { 
-        ...devices["iPhone 15 Pro Max"], 
-        baseURL: baseURL },
+			use: {
+				...devices["iPhone 15 Pro Max"],
+				baseURL: baseURL,
+				screenshot: 'on',
+				video: 'on'
+
+			},
 		},
 
 		{
 			name: "Samsung",
-			use: { 
-        ...devices["Galaxy S24"], 
-        baseURL: baseURL },
+			use: {
+				...devices["Galaxy S24"],
+				baseURL: baseURL,
+			},
 		},
 	],
 });

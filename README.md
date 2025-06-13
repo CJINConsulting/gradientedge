@@ -76,10 +76,41 @@ npx playwright show-report
 ## Architectural decisions
 
 *describe the architectural decisions and reasoning behind your approach*
+### Project Structure
+I've started the project off, assuming that there would be a future need to incorporate multiple customers, and having a framework that accommodate multiple customers would be more maintainable than managing one per client.
 
+We've started with a basic setup, with all client files inside their own folders e.g.
+```
+- shared/
+- ui/
+  - clientA/
+    - specs/
+    - fixtures/
+  - clientB/
+    - specs/
+    - fixtures/
+- playwright.config.ts
+- package.json
+- reports/
+```
+
+This gives us a logical structure to place our code, data files, helpers etc at the right level to accommodate sharing across client tests. It would also allow us clear way to add in an API folder in the future, following a similar setup.
+
+### Test Code
+We're using automated tools to emulate real user interactions. When we're using them, it should be in a way that mimics user behavior as closely as they can.
+
+Playwright has adopted the [DOM Testing Library](https://testing-library.com/docs/) approach by providing accessibility-based selectors, like `getByRole`.
+
+Using accessibility selectors in our tests brings us closer to elements the user is likely to interact with (e.g. by text content or labels rather than internal component structure).
+
+Interacting with the application 'as a user', forces us to think of validating functionality from the user's perspective, not the developer’s.
+
+### Configuration
 Playwright does a lot of the hard work in determining where things should go.
 
-For CI, we can pass environment variables in from the pipeline and pick them up via `dotenv`. As an example, if we wanted to run a pipeline that tested multiple devices, we could create strategy matrices in the github yaml, and the playwright config would be able to see these values and pass them in at the project level. e.g.
+For this project, most config will be at the project config level. You can apply configuration elsewhere, in fixtures, command line options, and when running in CI, from the variables stored in the pipelines.
+
+For CI, we can pass environment variables in from the pipeline and pick them up via `dotenv`. As an example, if we wanted to run a pipeline that tested multiple devices, we could create strategy matrices in the github yaml, and the playwright config would be able to see these env values and pass them in at the project level. e.g.
 
 ```yaml
 strategy:
@@ -92,10 +123,6 @@ steps:
       run: |
         DEVICE="${{ matrix.device}}"
         echo "DEVICE_NAME=$DEVICE" >> $GITHUB_ENV
-```
-
-```ts
-import dotenv from d
 ```
 
 ## Additional Considerations 
@@ -128,7 +155,8 @@ import dotenv from d
 ### Error Handling: How does your test handle unexpected situations, such as network issues or UI changes?
 
 #### UI Changes
-- UI changes are actively managed with clear locator management. If an element moves on the page, or has a slightly different name (e.g., from "Buy" to "Buy Now"), as long as the locator is still unique, the tests should be able to handle it
+- UI changes are actively managed with clear locator management. 
+- If an element moves on the page, or has a slightly different name (e.g., from "Buy" to "Buy Now"), as long as the locator is still unique, the tests should be able to handle it
 - If the UI changes significantly, I'd expect the tests to fail. If a button has a completely different name, or a locator value we'd expect to appear is no longer there, I'd want the test to fail. Even if the UI is still functional, this could impact the user experience.
 
 #### Network Issues
