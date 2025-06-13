@@ -6,10 +6,13 @@ export class PlaywrightPage {
 	public readonly lnkShoppingBasket: Locator;
 	public readonly txtShoppingBasketCount: Locator;
 
+    public readonly lnkMobileCart: Locator;
+
 	constructor(page: Page) {
 		this.page = page;
 		this.btnAllowCookies = page.getByRole("button", { name: "Accept" });
 		this.lnkShoppingBasket = page.getByRole("link", { name: /shopping basket/ });
+        this.lnkMobileCart = page.getByLabel("Cart", {exact: true});
 		this.txtShoppingBasketCount = page.locator("#nav-cart-count");
 	}
 
@@ -30,12 +33,25 @@ export class PlaywrightPage {
 			window.scrollTo(0, 0); // Scroll to the top of the page
 		});
 
-		await this.lnkShoppingBasket.scrollIntoViewIfNeeded();
-		await this.lnkShoppingBasket.click();
+		if (await this.isMobileViewPort()) {
+            await this.lnkMobileCart.click();
+		} else {
+			await this.lnkShoppingBasket.click();
+		}
 	}
 
 	public async checkShoppingBasketCount(count: string): Promise<void> {
 		await this.page.waitForLoadState("load");
 		expect(await this.txtShoppingBasketCount).toContainText(count);
+	}
+
+	public async isMobileViewPort(): Promise<Boolean> {
+        const viewport = await this.page.viewportSize();
+
+		if (viewport && viewport.width <= 768) {
+			return true;
+		}
+
+        return false;
 	}
 }

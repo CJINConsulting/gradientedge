@@ -164,6 +164,7 @@ steps:
 
 ##### Multiple Items in Basket
 - We may need to handle scenarios where multiple items are added to the basket. This includes verifying correct total price, handling discounts, and ensuring that the correct items are displayed
+- This would likely involve some refactoring around manipulating products when adding to basket, and basket updates
 
 ##### Unexpected Popups
 - We may need to handle unexpected popups - such as warranty selection, cookie consent, special offers, etc
@@ -179,18 +180,19 @@ steps:
 ### Modularity: Is your code modular and reusable?
 #### Domain specific structure
 - All code specific to the brand/client is structured underneath a top-level client folder
-- Any shared items can go into a shared folder, if they are useful to multiple client. This keeps the codebase clean, test scripts brand-specific, minimises duplication and enables quicker scaling
+- Any shared items can go into a shared folder, if they are useful to multiple clients. This keeps the codebase clean, test scripts brand-specific, minimises duplication and enables quicker scaling
 
 #### Page Object Model (POM)
 - The website has been partitioned into logical pages using the Page Object Model. This approach gives us reusable components for different pages and elements. The tests are more maintainable and easier to understand as a result
-- We could go a step further - abstracting page usage into controller classes and injecting them as fixtures
+- We could go a step further - abstracting page usage into controller classes and injecting them as fixtures, such as a registration controller that combines all the steps required across each page to sign up as a logged in customer
 
 ### Error Handling: How does your test handle unexpected situations, such as network issues or UI changes?
 
 #### UI Changes
 - UI changes are actively managed with clear locator management. 
 - If an element moves on the page, or has a slightly different name (e.g., from "Buy" to "Buy Now"), as long as the locator is still unique, the tests should be able to handle it
-- If the UI changes significantly, I'd expect the tests to fail. If a button has a completely different name, or a locator value we'd expect to appear is no longer there, I'd want the test to fail. Even if the UI is still functional, this could impact the user experience.
+- If the UI changes significantly, I'd expect the tests to fail. If a button has a completely different name, or a locator value we'd expect to appear is no longer there, I'd want the test to fail. Even if the UI is still functional, this could impact the user experience
+- The Amazon site in particular has a lot of dynamic content loading and frequent DOM updates, so locators sometimes need to be made more resilient with additional waits
 
 #### Network Issues
 - Network issues can be addressed with retry logic and timeout settings in the configuration

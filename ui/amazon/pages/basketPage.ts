@@ -11,7 +11,7 @@ export class BasketPage extends PlaywrightPage {
 
 		this.btnIncreaseQuantityByOne = page.getByRole("button", { name: "Increase quantity by one", exact: true });
 		this.btnDecreaseQuantityByOne = page.getByRole("button", { name: "Decrease quantity by one", exact: true });
-		this.btnDeleteItem = page.getByText("Delete");
+		this.btnDeleteItem = page.getByRole("button", {name: /Delete/});
 	}
 
 	public async increaseQuantityByOne(): Promise<void> {
