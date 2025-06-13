@@ -14,6 +14,7 @@ export class HomePage extends PlaywrightPage {
 
 	public async load(): Promise<void> {
 		await this.page.goto("/");
+        await this.continueShopping();
 		await this.acceptCookiePreferences();
 	}
 
