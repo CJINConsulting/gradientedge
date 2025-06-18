@@ -22,6 +22,7 @@ export class PlaywrightPage {
 		await this.waitForPageLoad();
 		await this.btnAllowCookies.waitFor({ state: "visible" });
 		await this.btnAllowCookies.click();
+		await this.page.waitForLoadState("load");
 		await this.btnAllowCookies.waitFor({ state: "hidden" });
 	}
 
@@ -32,7 +33,8 @@ export class PlaywrightPage {
 
 		if (await this.btnContinueShopping.isVisible()) {
 			await this.btnContinueShopping.click();
-			await this.btnContinueShopping.waitFor({ state: "hidden", timeout: 5000 });
+			await this.page.waitForLoadState("load");
+			await this.btnContinueShopping.waitFor({ state: "hidden" });
 		}
 	}
 
