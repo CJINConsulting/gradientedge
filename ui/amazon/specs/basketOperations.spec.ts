@@ -1,7 +1,7 @@
 import { test } from "../fixtures/pageObjects";
 import { expect } from "@playwright/test";
 
-const productName = "20-Pack AA Alkaline High-Performance Batteries";
+const productName = "40 Pack Household Alkaline Batteries";
 
 test.describe("Amazon - Basket Operations", () => {
 	test.beforeEach("Add a product to the basket", async ({ homePage, productPage, resultsPage }) => {
