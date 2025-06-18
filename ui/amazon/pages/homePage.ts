@@ -19,11 +19,7 @@ export class HomePage extends PlaywrightPage {
 	}
 
 	public async searchForProduct(productName: string): Promise<void> {
-		await this.page.waitForLoadState("load");
 		await this.txtSearchBox.fill(productName);
 		await this.btnSearchSubmit.click();
 	}
 }
-
-//select top offer
-//select basket

@@ -1,4 +1,4 @@
-import { Locator, Page, expect } from "playwright/test";
+import { Locator, Page } from "playwright/test";
 import { PlaywrightPage } from "../../../shared/pages/playwrightPage";
 
 export class BasketPage extends PlaywrightPage {
@@ -15,19 +15,19 @@ export class BasketPage extends PlaywrightPage {
 	}
 
 	public async increaseQuantityByOne(): Promise<void> {
-		await this.page.waitForLoadState("load");
+		await this.waitForPageLoad();
 		await this.btnIncreaseQuantityByOne.click();
-		await this.btnIncreaseQuantityByOne.waitFor({ state: "visible" });
+		
 	}
 
 	public async decreaseQuantityByOne(): Promise<void> {
-		await this.page.waitForLoadState("load");
+		await this.waitForPageLoad();
 		await this.btnDecreaseQuantityByOne.click();
 		await this.btnIncreaseQuantityByOne.waitFor({ state: "visible" });
 	}
 
 	public async deleteItem(): Promise<void> {
-		await this.page.waitForLoadState("load");
+		await this.waitForPageLoad();
 		await this.btnDeleteItem.click();
 		await this.btnDeleteItem.waitFor({ state: "hidden" });
 	}

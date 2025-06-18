@@ -4,7 +4,7 @@ import { expect } from "@playwright/test";
 test.describe("Amazon - Basket Operations", () => {
 	test("Update the basket item amount", { tag: "@Smoke" }, async ({ homePage, resultsPage, basketPage }) => {
 		await homePage.load();
-		await homePage.searchForProduct("aa batteries");
+		await homePage.searchForProduct("Amazon Basics 100-Pack AA");
 		await resultsPage.selectAddToBasketButton(1);
 
 		await expect(resultsPage.txtShoppingBasketCount).toContainText("1");

@@ -75,6 +75,7 @@ npx playwright show-report
 - Latest browsers and versions
 
 ### Challenge assumptions
+- The challenge is to see a 'proof of work'. Not a perfect, polished example with every anticipated feature, but an idea of thought processes and progressive build of a framework over time
 - The test is for a 'logged out' user
 - Any product can be selected
 - We're not validating any of the details of the product
@@ -181,6 +182,7 @@ steps:
 #### Domain specific structure
 - All code specific to the brand/client is structured underneath a top-level client folder
 - Any shared items can go into a shared folder, if they are useful to multiple clients. This keeps the codebase clean, test scripts brand-specific, minimises duplication and enables quicker scaling
+- Internal coding standards and structure not considered for the initial PoC. This may impact the reusability if we adopt different practices around fixture and controller usage
 
 #### Page Object Model (POM)
 - The website has been partitioned into logical pages using the Page Object Model. This approach gives us reusable components for different pages and elements. The tests are more maintainable and easier to understand as a result
