@@ -8,7 +8,7 @@ type PageObjects = {
 	homePage: HomePage;
 	basketPage: BasketPage;
 	resultsPage: ResultsPage;
-	productPage: ProductPage
+	productPage: ProductPage;
 };
 const test = base.extend<PageObjects>({
 	homePage: async ({ page }, use) => {

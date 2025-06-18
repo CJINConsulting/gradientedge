@@ -28,7 +28,7 @@ export class ResultsPage extends PlaywrightPage {
 
 	/**
 	 * Finds the first product in the search results that matches the product name.
-	 * @param partialProductName 
+	 * @param partialProductName
 	 * @returns a Locator element of the search result link
 	 */
 	public async getProductByName(partialProductName: string): Promise<Locator> {

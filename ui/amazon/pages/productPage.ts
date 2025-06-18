@@ -8,8 +8,8 @@ export class ProductPage extends PlaywrightPage {
 	constructor(page: Page) {
 		super(page);
 
-		this.btnAddToBasket = page.getByTitle('Add to Shopping Basket');
-		this.hdrAddedToBasket = page.getByRole('heading', { name: 'Added to basket' });
+		this.btnAddToBasket = page.getByTitle("Add to Shopping Basket");
+		this.hdrAddedToBasket = page.getByRole("heading", { name: "Added to basket" });
 	}
 
 	public async isItemAddedToBasket(): Promise<boolean> {

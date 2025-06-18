@@ -17,12 +17,14 @@ export class BasketPage extends PlaywrightPage {
 	public async increaseQuantityByOne(): Promise<void> {
 		await this.waitForPageLoad();
 		await this.btnIncreaseQuantityByOne.click();
-		
+		await this.btnIncreaseQuantityByOne.waitFor({ state: "visible" });
 	}
 
 	public async decreaseQuantityByOne(): Promise<void> {
 		await this.waitForPageLoad();
 		await this.btnDecreaseQuantityByOne.click();
+
+		// Check for Increase button visibility, as the decrease button disappears when item value is 1
 		await this.btnIncreaseQuantityByOne.waitFor({ state: "visible" });
 	}
 

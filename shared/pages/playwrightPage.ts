@@ -20,7 +20,7 @@ export class PlaywrightPage {
 
 	protected async acceptCookiePreferences() {
 		await this.waitForPageLoad();
-        await this.btnAllowCookies.waitFor({ state: "visible" })
+		await this.btnAllowCookies.waitFor({ state: "visible" });
 		await this.btnAllowCookies.click();
 		await this.btnAllowCookies.waitFor({ state: "hidden" });
 	}
@@ -65,7 +65,7 @@ export class PlaywrightPage {
 		return false;
 	}
 
-    public async waitForPageLoad(): Promise<void> {
-        await this.page.waitForLoadState("load");
-    }
+	public async waitForPageLoad(): Promise<void> {
+		await this.page.waitForLoadState("load");
+	}
 }

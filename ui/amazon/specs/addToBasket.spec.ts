@@ -1,16 +1,20 @@
 import { test } from "../fixtures/pageObjects";
-import { expect } from "@playwright/test";
+import { expect, Locator } from "@playwright/test";
 
 const productName = "100-Pack AA Alkaline High-Performance Batteries";
+let product: Locator;
 
 test.describe("Amazon - Add items to the basket", () => {
-	test("Add an item to the basket", { tag: "@Smoke" }, async ({ homePage, resultsPage, productPage, basketPage }) => {
+	test.beforeEach("Search for Product", async ({ homePage, resultsPage }) => {
 		await homePage.load();
 		await homePage.searchForProduct(productName);
 
 		// Open the product page
-		const product = await resultsPage.getProductByName(productName);
+		product = await resultsPage.getProductByName(productName);
 		await product.waitFor({ state: "visible" });
+	});
+
+	test("Add an item to the basket", { tag: "@Smoke" }, async ({ resultsPage, productPage }) => {
 		await product.click();
 
 		// Select add to basket from product page
