@@ -1,7 +1,7 @@
 import { test } from "../fixtures/pageObjects";
 import { expect } from "@playwright/test";
 
-const productName = "100-Pack AA Alkaline High-Performance Batteries";
+const productName = "20-Pack AA Alkaline High-Performance Batteries";
 
 test.describe("Amazon - Product Navigation", () => {
 	test("Can search for products", { tag: "@Smoke" }, async ({ homePage, resultsPage }) => {

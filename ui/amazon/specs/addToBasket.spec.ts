@@ -1,7 +1,7 @@
 import { test } from "../fixtures/pageObjects";
 import { expect, Locator } from "@playwright/test";
 
-const productName = "100-Pack AA Alkaline High-Performance Batteries";
+const productName = "20-Pack AA Alkaline High-Performance Batteries";
 let product: Locator;
 
 test.describe("Amazon - Add items to the basket", () => {
