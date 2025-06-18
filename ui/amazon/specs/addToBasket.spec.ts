@@ -1,11 +1,25 @@
 import { test } from "../fixtures/pageObjects";
-import { expect } from "@playwright/test";
+import { expect, Locator } from "@playwright/test";
+
+const productName = "40 Pack Household Alkaline Batteries";
+let product: Locator;
 
 test.describe("Amazon - Add items to the basket", () => {
-	test("Add an item to the basket", { tag: "@Smoke" }, async ({ homePage, resultsPage, basketPage }) => {
+	test.beforeEach("Search for Product", async ({ homePage, resultsPage }) => {
 		await homePage.load();
-		await homePage.searchForProduct("aa batteries");
-		await resultsPage.selectAddToBasketButton(1);
-		await expect(resultsPage.txtShoppingBasketCount).toContainText("1");
+		await homePage.searchForProduct(productName);
+
+		// Open the product page
+		product = await resultsPage.getProductByName(productName);
+		await product.waitFor({ state: "visible" });
+	});
+
+	test("Add an item to the basket", { tag: "@Smoke" }, async ({ resultsPage, productPage }) => {
+		await product.click();
+
+		// Select add to basket from product page
+		await productPage.btnAddToBasket.click();
+		expect(await productPage.isItemAddedToBasket()).toBeTruthy();
+		expect(resultsPage.txtShoppingBasketCount).toContainText("1");
 	});
 });

@@ -19,12 +19,11 @@ export class PlaywrightPage {
 	}
 
 	protected async acceptCookiePreferences() {
+		await this.waitForPageLoad();
+		await this.btnAllowCookies.waitFor({ state: "visible" });
+		await this.btnAllowCookies.click();
 		await this.page.waitForLoadState("load");
-
-		if (await this.btnAllowCookies.isVisible()) {
-			await this.btnAllowCookies.click();
-			await this.btnAllowCookies.waitFor({ state: "hidden", timeout: 5000 });
-		}
+		await this.btnAllowCookies.waitFor({ state: "hidden" });
 	}
 
 	protected async continueShopping() {
@@ -34,7 +33,8 @@ export class PlaywrightPage {
 
 		if (await this.btnContinueShopping.isVisible()) {
 			await this.btnContinueShopping.click();
-			await this.btnContinueShopping.waitFor({ state: "hidden", timeout: 5000 });
+			await this.page.waitForLoadState("load");
+			await this.btnContinueShopping.waitFor({ state: "hidden" });
 		}
 	}
 
@@ -65,5 +65,9 @@ export class PlaywrightPage {
 		}
 
 		return false;
+	}
+
+	public async waitForPageLoad(): Promise<void> {
+		await this.page.waitForLoadState("load");
 	}
 }

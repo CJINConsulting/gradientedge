@@ -46,6 +46,13 @@ To run tests with a specific configuration file, use the --config option:
 npx playwright test --config=playwright.config.js
 ```
 
+### Run Tests with a Specific Environment Variable
+To run tests with a specific environment variable e.g. setting the environment to the test environment:
+
+```bash
+ENVIRONMENT=test npx playwright test
+```
+
 ### Run Tests in Headed Mode
 To run tests with the browser UI visible:
 
@@ -75,11 +82,11 @@ npx playwright show-report
 - Latest browsers and versions
 
 ### Challenge assumptions
+- The challenge is to see a 'proof of work'. Not a showcase example with every anticipated feature, but an idea of thought processes and progressive build of a framework over time
 - The test is for a 'logged out' user
 - Any product can be selected
 - We're not validating any of the details of the product
 - No special handling or verification of promotional discounts or dynamic pricing
-- Product can be found by search and select
 - No multi-product scenarios required
 
 ### Considered for future work
@@ -103,14 +110,16 @@ npx playwright show-report
 ```
 - data factories to generate test values for each test
 - more pipelines for capturing screenshots and videos for artifact storage
+- controllers to manage repeated steps through a process
 - Managing multiple items in search
 - Managing multiple items in basket
+- Product options
 
 ## Architectural decisions
 
 *describe the architectural decisions and reasoning behind your approach*
 ### Project Structure
-I've started the project off, assuming that there would be a future need to incorporate multiple customers, and having a framework that accommodate multiple customers would be more maintainable than managing one per client.
+The initial project assumes that there would be a future need to incorporate multiple customers, and having a framework that accommodates multiple customers would be more maintainable than managing one per client.
 
 We've started with a basic setup, with all client files inside their own folders e.g.
 ```
@@ -162,13 +171,16 @@ steps:
 
 #### Examples
 
+##### Parallel Execution
+- The tests are isolated from each other, and can run independently. They don't share state with each other, and don't rely on the environment state - other than a pre-requisite of product data being available to select and add to the basket
+
 ##### Multiple Items in Basket
 - We may need to handle scenarios where multiple items are added to the basket. This includes verifying correct total price, handling discounts, and ensuring that the correct items are displayed
 - This would likely involve some refactoring around manipulating products when adding to basket, and basket updates
 
 ##### Unexpected Popups
-- We may need to handle unexpected popups - such as warranty selection, cookie consent, special offers, etc
-- This can be achieved by creating utility functions to close or interact with them
+- We may need to handle unexpected popups - such as warranty selection, special offers, etc
+- This can be achieved by creating utility functions or locator handlers, to close or interact with them
   
 ##### Minimum Purchase Amounts
 - There may be some unexpected items that enforce minimum or maximum purchase amounts, or even specific amounts
@@ -176,11 +188,11 @@ steps:
 ##### Out of Stock Products
 - We may need to handle scenarios where products are out of stock. This includes verifying that the application displays appropriate messages and prevents attempting to add out-of-stock items to the basket
 
-
 ### Modularity: Is your code modular and reusable?
 #### Domain specific structure
 - All code specific to the brand/client is structured underneath a top-level client folder
 - Any shared items can go into a shared folder, if they are useful to multiple clients. This keeps the codebase clean, test scripts brand-specific, minimises duplication and enables quicker scaling
+- Internal coding standards and structure not considered for the initial PoC. This may impact the reusability if we adopt different practices around fixture and controller usage
 
 #### Page Object Model (POM)
 - The website has been partitioned into logical pages using the Page Object Model. This approach gives us reusable components for different pages and elements. The tests are more maintainable and easier to understand as a result
@@ -192,7 +204,7 @@ steps:
 - UI changes are actively managed with clear locator management. 
 - If an element moves on the page, or has a slightly different name (e.g., from "Buy" to "Buy Now"), as long as the locator is still unique, the tests should be able to handle it
 - If the UI changes significantly, I'd expect the tests to fail. If a button has a completely different name, or a locator value we'd expect to appear is no longer there, I'd want the test to fail. Even if the UI is still functional, this could impact the user experience
-- The Amazon site in particular has a lot of dynamic content loading and frequent DOM updates, so locators sometimes need to be made more resilient with additional waits
+- The Amazon site in particular has a lot of dynamic content loading and frequent DOM updates, so this is being managed by waiting for specific checkpoints - waiting for a specific page or locator state
 
 #### Network Issues
 - Network issues can be addressed with retry logic and timeout settings in the configuration
